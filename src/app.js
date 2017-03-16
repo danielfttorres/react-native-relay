@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, ListView, StyleSheet } from 'react-native'
 import Relay from 'react-relay'
 import { createRenderer } from './RelayUtils'
 import RelayStore from './RelayStore'
-import EntriesQuery from './EntriesQuery'
+import SubredditQuery from './SubredditQuery'
+import SubredditItem from './components/SubredditItem'
+import ListFooter from './components/ListFooter'
 
-const GRAPHQL_ENDPOINT = 'http://localhost:8080'
+const GRAPHQL_ENDPOINT = 'http://192.168.0.12:8080'
 
 RelayStore.reset(
   new Relay.DefaultNetworkLayer(GRAPHQL_ENDPOINT)
@@ -13,28 +15,46 @@ RelayStore.reset(
 
 class ReactNativeRelay extends Component {
 
+  constructor(props) {
+    super(props)
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+    this.state = {
+      dataSource: ds.cloneWithRows(this.props.subreddit.hotListings)
+    }
+  }
+
   render() {
-    const { entries } = this.props
+    const { subreddit } = this.props
 
     return (
       <View style={style.container}>
-        <Text style={style.title}>
-          {entries.hotListings.length} items
-        </Text>
+        <ListView dataSource={this.state.dataSource}
+          renderRow={(data) =>
+            <SubredditItem
+              author={data.author}
+              score={data.score}
+              title={data.title}
+              url={data.url}
+            />
+          }
+          renderFooter={() =>
+            <ListFooter title={subreddit.title} itemsCount={subreddit.hotListings.length} />
+          }
+        />
       </View>
     )
   }
 }
 
 export default createRenderer(ReactNativeRelay, {
-  queries: EntriesQuery,
+  queries: SubredditQuery,
   fragments: {
-    entries: () => Relay.QL`
+    subreddit: () => Relay.QL`
       fragment on RedditSubreddit {
+        title
         hotListings {
           title
           score
-          numComments
           url
           author {
             username
@@ -51,11 +71,5 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-  },
-  title: {
-    fontSize: 22,
-    textAlign: 'center',
-    margin: 10,
-    color: '#F26B00'
   },
 })
