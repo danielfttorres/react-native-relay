@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ListView, StyleSheet } from 'react-native'
+import { Text, View, ListView, StyleSheet, Platform } from 'react-native'
 import Relay from 'react-relay'
 import { createRenderer } from './RelayUtils'
 import RelayStore from './RelayStore'
@@ -70,6 +70,7 @@ const style = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: (Platform.OS === 'ios') ? 20 : 0,
     backgroundColor: 'white',
   },
 })
