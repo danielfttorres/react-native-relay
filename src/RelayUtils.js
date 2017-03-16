@@ -64,15 +64,20 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'lightgray',
+    justifyContent: 'center'
   },
+  loadingText: {
+    marginVertical: 10,
+    fontSize: 12,
+    color: '#ccc',
+  }
 })
 
 const LoadingView = () => (
   <View style={styles.container}>
     <View style={styles.loading}>
       <ActivityIndicator color="#F26B00" />
+      <Text style={styles.loadingText}>Loading</Text>
     </View>
   </View>
 )
