@@ -1,0 +1,202 @@
+schema {
+  query: RedditAPI
+}
+
+# The Reddit API
+type RedditAPI {
+  subreddit(
+    # Name of the subreddit
+    name: String!
+  ): RedditSubreddit
+  user(
+    # Username of the user
+    username: String!
+  ): RedditUser
+}
+
+# A comment on a link
+type RedditComment {
+  # Author of the comment
+  author: RedditUser!
+
+  # Body of the comment
+  body: String!
+
+  # Replies to the comment
+  replies(
+    # Maximum depth of subtrees in the thread
+    depth: Int
+
+    # Maximum number of comments to return
+    limit: Int
+  ): [RedditComment]!
+}
+
+# A link posted to a subreddit
+type RedditLink {
+  # Title of the link
+  title: String!
+
+  # The Reddit API fullname of the link
+  fullnameId: String!
+
+  # Score of the link
+  score: Int!
+
+  # Number of comments
+  numComments: Int!
+
+  # URL of the link
+  url: String!
+
+  # Author of the link
+  author: RedditUser!
+
+  # Comments on the link
+  comments(
+    # Maximum depth of subtrees in the thread
+    depth: Int
+
+    # Maximum number of comments to return
+    limit: Int
+  ): [RedditComment]!
+}
+
+# Information about and listings in a subreddit
+type RedditSubreddit {
+  # Name of the subreddit
+  name: String!
+
+  # The Reddit API fullname of the subreddit
+  fullnameId: String!
+
+  # Title of the subreddit
+  title: String!
+
+  # Description of the subreddit
+  publicDescription: String!
+
+  # Accounts active right now on the subreddit
+  accountsActive: Int!
+
+  # Number of subscribers to the subreddit
+  subscribers: Int!
+
+  # Creation date of the subreddit, in Unix Time (UTC)
+  created: Float!
+
+  # Creation date of the subreddit, in ISO8601
+  createdISO: String!
+
+  # Hot/"Front Page" listings of the subreddit
+  hotListings(
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    after: String
+
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    before: String
+
+    # The number of items already seen in this listing
+    count: Int
+
+    # The maximum number of items to return in this slice of the listing.
+    limit: Int
+  ): [RedditLink]!
+
+  # Newest listings of the subreddit
+  newListings(
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    after: String
+
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    before: String
+
+    # The number of items already seen in this listing
+    count: Int
+
+    # The maximum number of items to return in this slice of the listing.
+    limit: Int
+  ): [RedditLink]!
+
+  # Rising listings of the subreddit
+  risingListings(
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    after: String
+
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    before: String
+
+    # The number of items already seen in this listing
+    count: Int
+
+    # The maximum number of items to return in this slice of the listing.
+    limit: Int
+  ): [RedditLink]!
+
+  # Controversial listings of the subreddit
+  controversialListings(
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    after: String
+
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    before: String
+
+    # The number of items already seen in this listing
+    count: Int
+
+    # The maximum number of items to return in this slice of the listing.
+    limit: Int
+
+    # Time interval to retrieve listings
+    timeInterval: TimeInterval
+  ): [RedditLink]!
+
+  # Top listings of the subreddit
+  topListings(
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    after: String
+
+    # FullnameId of an item in the listing to use as the anchor point of the slice.
+    before: String
+
+    # The number of items already seen in this listing
+    count: Int
+
+    # The maximum number of items to return in this slice of the listing.
+    limit: Int
+
+    # Time interval to retrieve listings
+    timeInterval: TimeInterval
+  ): [RedditLink]!
+}
+
+# Information about a Reddit user
+type RedditUser {
+  # The Reddit API fullname of the user
+  fullnameId: String!
+
+  # The user's unique username.
+  username: String!
+
+  # Creation date of the user, in Unix Time (UTC)
+  created: Float!
+
+  # Creation date of the user, in ISO8601
+  createdISO: String!
+
+  # Karma by links of the user
+  linkKarma: Int!
+
+  # Karma by comments of the user
+  commentKarma: Int!
+}
+
+# Time interval by which listings are queried
+enum TimeInterval {
+  hour
+  day
+  week
+  month
+  year
+  all
+}
