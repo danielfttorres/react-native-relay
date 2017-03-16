@@ -1,11 +1,11 @@
 import Relay from 'react-relay'
 
-const EntriesQuery = {
-  entries: () => Relay.QL`
+const SubredditQuery = {
+  subreddit: () => Relay.QL`
     query {
       subreddit(name: "Futurology")
     }
   `,
 }
 
-export default EntriesQuery
+export default SubredditQuery

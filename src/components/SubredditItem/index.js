@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Text, View } from 'react-native'
 import style from './style'
 
-class EntryItem extends Component {
+class SubredditItem extends Component {
 
   static propTypes = {
     author: PropTypes.object.isRequired,
@@ -36,4 +36,4 @@ class EntryItem extends Component {
   }
 }
 
-export default EntryItem
+export default SubredditItem
