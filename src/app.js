@@ -7,7 +7,7 @@ import SubredditQuery from './SubredditQuery'
 import SubredditItem from './components/SubredditItem'
 import ListFooter from './components/ListFooter'
 
-const GRAPHQL_ENDPOINT = 'http://192.168.0.12:8080'
+const GRAPHQL_ENDPOINT = 'http://localhost:8080'
 
 RelayStore.reset(
   new Relay.DefaultNetworkLayer(GRAPHQL_ENDPOINT)
