@@ -31,6 +31,6 @@ $ react-native run-android
 ```
 
 ### Demo
-![iOS](https://github.com/danielfeelfine/react-native-relay/raw/master/media/capture-ios.gif)
-
-![Android](https://github.com/danielfeelfine/react-native-relay/raw/master/media/capture-android.gif)
+iOS            |  Android
+:-------------------------:|:-------------------------:
+![iOS](https://github.com/danielfeelfine/react-native-relay/raw/master/media/capture-ios.gif)  |  ![Android](https://github.com/danielfeelfine/react-native-relay/raw/master/media/capture-android.gif)
